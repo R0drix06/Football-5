@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 1581207807193889187}
   - component: {fileID: 6158990846221559930}
   m_Layer: 0
-  m_Name: Delantero_1
-  m_TagString: Player
+  m_Name: P1
+  m_TagString: P1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98275788297b7c4286396680d1601ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canControl: 0
+  p1CanControl: 0
   speed: 2.5
 --- !u!212 &866029557164224496
 SpriteRenderer:
@@ -94,7 +94,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.31161785, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

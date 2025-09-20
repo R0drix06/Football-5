@@ -3,38 +3,65 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Transform ball;
-    private PlayerController[] players;
+    private Player_1_Controller[] p1_Players;
+    private Player_2_Controller[] p2_Players;
 
     void Start()
     {
-        players = Object.FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+        p1_Players = Object.FindObjectsByType<Player_1_Controller>(FindObjectsSortMode.None);
+        p2_Players = Object.FindObjectsByType<Player_2_Controller>(FindObjectsSortMode.None);
     }
 
     void Update()
     {
-        PlayerController closestPlayer = null;
-        float minDistance = Mathf.Infinity;
+        Player_1_Controller closestPlayer_1 = null;
+        Player_2_Controller closestPlayer_2 = null;
+        float p1_MinDistance = Mathf.Infinity;
+        float p2_MinDistance = Mathf.Infinity;
 
-        foreach (PlayerController p in players)
+        foreach (Player_1_Controller p in p1_Players)
         {
             float dist = Vector3.Distance(p.transform.position, ball.position);
-            if (dist < minDistance)
+            if (dist < p1_MinDistance)
             {
-                minDistance = dist;
-                closestPlayer = p;
+                p1_MinDistance = dist;
+                closestPlayer_1 = p;
             }
         }
 
-        // Desactivar control en todos
-        foreach (PlayerController p in players)
+        foreach (Player_2_Controller p in p2_Players)
         {
-            p.canControl = false;
+            float dist = Vector3.Distance(p.transform.position, ball.position);
+            if (dist < p2_MinDistance)
+            {
+                p2_MinDistance = dist;
+                closestPlayer_2 = p;
+            }
         }
 
-        // Activar solo el más cercano
-        if (closestPlayer != null)
+
+        // Desactivar control en todos
+        foreach (Player_1_Controller p in p1_Players)
         {
-            closestPlayer.canControl = true;
+            p.p1CanControl = false;
+        }
+
+        foreach (Player_2_Controller p in p2_Players)
+        {
+            p.p2CanControl = false;
+        }
+
+
+
+        // Activar solo el más cercano
+        if (closestPlayer_1 != null)
+        {
+            closestPlayer_1.p1CanControl = true;
+        }
+
+        if (closestPlayer_2 != null)
+        {
+            closestPlayer_2.p2CanControl = true;
         }
     }
 }
