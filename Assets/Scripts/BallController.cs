@@ -1,14 +1,18 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallController : MonoBehaviour
 {
+    SceneManager sceneManager;
+
     private Transform currentPlayer;
 
     public static bool ballIsControlled = false;
     public int controllingPlayer = 0;
 
-    private float horizontalInput;
-    private float verticalInput;
+    private Player_1_Controller player_1_Controller;
+    private Player_2_Controller player_2_Controller;
 
     [SerializeField] private float passSpeed = 5f;
     [SerializeField] private float shootSpeed = 5f;
@@ -26,22 +30,17 @@ public class BallController : MonoBehaviour
 
     void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
         shootCurrentTime += Time.deltaTime;
-        Debug.Log(shootCurrentTime);
 
         if (ballIsControlled)
         {
-            if (horizontalInput != 0 || verticalInput != 0)
-            {
-                transform.localPosition = new Vector3(horizontalInput, verticalInput, 0);
-            }
-
-
             if (controllingPlayer == 1)
             {
+                if (player_1_Controller.p1HorizontalInput != 0 || player_1_Controller.p1VerticalInput != 0)
+                {
+                    transform.localPosition = new Vector3(player_1_Controller.p1HorizontalInput, player_1_Controller.p1VerticalInput, 0);
+                }
+
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     shootCurrentTime = 0;
@@ -55,7 +54,7 @@ public class BallController : MonoBehaviour
                         ballIsControlled = false;
                         controllingPlayer = 0;
 
-                        rb2d.linearVelocity = new Vector2(horizontalInput * shootSpeed, verticalInput * shootSpeed);
+                        rb2d.linearVelocity = new Vector2(player_1_Controller.p1HorizontalInput * shootSpeed, player_1_Controller.p1VerticalInput * shootSpeed);
                     }
                     else
                     {
@@ -65,6 +64,11 @@ public class BallController : MonoBehaviour
             }
             else if (controllingPlayer == 2)
             {
+                if (player_2_Controller.p2HorizontalInput != 0 || player_2_Controller.p2VerticalInput != 0)
+                {
+                    transform.localPosition = new Vector3(player_2_Controller.p2HorizontalInput, player_2_Controller.p2VerticalInput, 0);
+                }
+
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
                     shootCurrentTime = 0;
@@ -78,7 +82,7 @@ public class BallController : MonoBehaviour
                         ballIsControlled = false;
                         controllingPlayer = 0;
 
-                        rb2d.linearVelocity = new Vector2(horizontalInput * shootSpeed, verticalInput * shootSpeed);
+                        rb2d.linearVelocity = new Vector2(player_2_Controller.p2HorizontalInput * shootSpeed, player_2_Controller.p2VerticalInput * shootSpeed);
                     }
                     else
                     {
@@ -103,6 +107,8 @@ public class BallController : MonoBehaviour
             currentPlayer = collision.transform;
 
             controllingPlayer = 1;
+
+            player_1_Controller = collision.gameObject.GetComponent<Player_1_Controller>();
         }
 
         if (collision.gameObject.CompareTag("P2"))
@@ -116,6 +122,20 @@ public class BallController : MonoBehaviour
             currentPlayer = collision.transform;
 
             controllingPlayer = 2;
+
+            player_2_Controller = collision.gameObject.GetComponent<Player_2_Controller>();
+        }
+
+        if (collision.gameObject.CompareTag("Arco_P2"))
+        {
+            GameManager.Instance.Score_P1++;
+            SceneManager.LoadScene(0);
+        }
+
+        if (collision.gameObject.CompareTag("Arco_P1"))
+        {
+            GameManager.Instance.Score_P2++;
+            SceneManager.LoadScene(0);
         }
     }
 

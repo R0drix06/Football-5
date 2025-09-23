@@ -1,10 +1,45 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
+
+    public int Score_P1 = 0;
+    public int Score_P2 = 0;
+
     [SerializeField] private Transform ball;
     private Player_1_Controller[] p1_Players;
     private Player_2_Controller[] p2_Players;
+
+    void Awake()
+    {
+        // Verificar que no exista otra instancia
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; // limpiar al destruir
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Volver a buscar jugadores y la pelota en la nueva escena
+        p1_Players = Object.FindObjectsByType<Player_1_Controller>(FindObjectsSortMode.None);
+        p2_Players = Object.FindObjectsByType<Player_2_Controller>(FindObjectsSortMode.None);
+        ball = GameObject.FindWithTag("Ball")?.transform;
+    }
 
     void Start()
     {
@@ -14,6 +49,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(Score_P1 + "a" +  Score_P2);
+
         Player_1_Controller closestPlayer_1 = null;
         Player_2_Controller closestPlayer_2 = null;
         float p1_MinDistance = Mathf.Infinity;
