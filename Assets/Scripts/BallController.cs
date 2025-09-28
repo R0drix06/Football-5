@@ -41,12 +41,12 @@ public class BallController : MonoBehaviour
                     transform.localPosition = new Vector3(player_1_Controller.p1HorizontalInput, player_1_Controller.p1VerticalInput, 0);
                 }
 
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.K))
                 {
                     shootCurrentTime = 0;
                 }
 
-                if (Input.GetKeyUp(KeyCode.Space))
+                if (Input.GetKeyUp(KeyCode.K))
                 {
                     if (shootCurrentTime > shootTime)
                     {
@@ -69,12 +69,12 @@ public class BallController : MonoBehaviour
                     transform.localPosition = new Vector3(player_2_Controller.p2HorizontalInput, player_2_Controller.p2VerticalInput, 0);
                 }
 
-                if (Input.GetKeyDown(KeyCode.Alpha1))
+                if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
                     shootCurrentTime = 0;
                 }
 
-                if (Input.GetKeyUp(KeyCode.Alpha1))
+                if (Input.GetKeyUp(KeyCode.Keypad1))
                 {
                     if (shootCurrentTime > shootTime)
                     {
