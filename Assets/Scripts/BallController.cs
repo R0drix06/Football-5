@@ -128,14 +128,28 @@ public class BallController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Arco_P2"))
         {
-            GameManager.Instance.Score_P1++;
-            SceneManager.LoadScene(0);
+            if (GameManager.Instance.Score_P1 >= 4)
+            {
+                SceneManager.LoadScene(1);
+            }
+            else
+            {
+                GameManager.Instance.Score_P1++;
+                SceneManager.LoadScene(0);
+            }
         }
 
         if (collision.gameObject.CompareTag("Arco_P1"))
         {
-            GameManager.Instance.Score_P2++;
-            SceneManager.LoadScene(0);
+            if (GameManager.Instance.Score_P2 >= 4)
+            {
+                SceneManager.LoadScene(2);
+            }
+            else
+            {
+                GameManager.Instance.Score_P2++;
+                SceneManager.LoadScene(0);
+            }
         }
     }
 

@@ -35,10 +35,11 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Volver a buscar jugadores y la pelota en la nueva escena
+
         p1_Players = Object.FindObjectsByType<Player_1_Controller>(FindObjectsSortMode.None);
         p2_Players = Object.FindObjectsByType<Player_2_Controller>(FindObjectsSortMode.None);
         ball = GameObject.FindWithTag("Ball")?.transform;
+
     }
 
     void Start()
@@ -49,8 +50,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(Score_P1 + "a" +  Score_P2);
-
         Player_1_Controller closestPlayer_1 = null;
         Player_2_Controller closestPlayer_2 = null;
         float p1_MinDistance = Mathf.Infinity;
