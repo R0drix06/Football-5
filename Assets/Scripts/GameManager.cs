@@ -100,5 +100,12 @@ public class GameManager : MonoBehaviour
         {
             closestPlayer_2.p2CanControl = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Score_P1 = 0;
+            Score_P2 = 0;
+            SceneManager.LoadScene("SampleScene");
+        }
     }
 }

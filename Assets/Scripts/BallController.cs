@@ -1,10 +1,10 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BallController : MonoBehaviour
 {
-    SceneManager sceneManager;
 
     private Transform currentPlayer;
 
@@ -21,7 +21,6 @@ public class BallController : MonoBehaviour
     private float shootCurrentTime = 0;
 
     Rigidbody2D rb2d;
-
 
     void Start()
     {
@@ -129,13 +128,19 @@ public class BallController : MonoBehaviour
         if (collision.gameObject.CompareTag("Arco_P2"))
         {
             GameManager.Instance.Score_P1++;
-            SceneManager.LoadScene(0);
+            if (GameManager.Instance.Score_P1 > 4)
+                SceneManager.LoadScene("BlueScreen");
+            else
+                SceneManager.LoadScene(0);
         }
 
         if (collision.gameObject.CompareTag("Arco_P1"))
         {
             GameManager.Instance.Score_P2++;
-            SceneManager.LoadScene(0);
+            if (GameManager.Instance.Score_P2 > 4)
+                SceneManager.LoadScene("RedScreen");
+            else
+                SceneManager.LoadScene(0);
         }
     }
 
